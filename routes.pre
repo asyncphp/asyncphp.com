@@ -10,7 +10,6 @@ $includes = [
 ];
 
 $templates = [
-    "pages/downloads" => templateWithIncludes("pages/downloads", $includes),
     "pages/home" => templateWithIncludes("pages/home", $includes),
     "pages/sample" => templateWithIncludes("pages/sample", $includes),
 ];
@@ -18,11 +17,6 @@ $templates = [
 return (Router $router) => {
     $router->route("GET", "/", (Request $request, Response $response) => {
         $template = yield $templates["pages/home"];
-        $response->end($template);
-    });
-
-    $router->route("GET", "/downloads", (Request $request, Response $response) => {
-        $template = yield $templates["pages/downloads"];
         $response->end($template);
     });
 
