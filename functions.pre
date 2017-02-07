@@ -8,7 +8,6 @@ use Amp\Promise;
  */
 function template($path) {
     print "Loading {$path}..." . PHP_EOL;
-
     return File\get(__DIR__ . "/templates/" . ltrim($path, "/") . ".html");
 }
 
@@ -19,7 +18,6 @@ function template($path) {
 function templateWithIncludes($path, $includes) {
     return Amp\resolve(() => {
         print "Loading with includes {$path}..." . PHP_EOL;
-
         $content = yield template($path);
 
         foreach ($includes as $key => $value) {
