@@ -1,0 +1,33 @@
+<?php
+
+use Aerys\Request;
+use Aerys\Response;
+use Aerys\Router;
+
+$includes = [
+    "includes/header" => template("includes/header"),
+    "includes/footer" => template("includes/footer"),
+];
+
+$templates = [
+    "pages/downloads" => templateWithIncludes("pages/downloads", $includes),
+    "pages/home" => templateWithIncludes("pages/home", $includes),
+    "pages/sample" => templateWithIncludes("pages/sample", $includes),
+];
+
+return (Router $router) => {
+    $router->route("GET", "/", (Request $request, Response $response) => {
+        $template = yield $templates["pages/home"];
+        $response->end($template);
+    });
+
+    $router->route("GET", "/downloads", (Request $request, Response $response) => {
+        $template = yield $templates["pages/downloads"];
+        $response->end($template);
+    });
+
+    $router->route("GET", "/sample", (Request $request, Response $response) => {
+        $template = yield $templates["pages/sample"];
+        $response->end($template);
+    });
+};

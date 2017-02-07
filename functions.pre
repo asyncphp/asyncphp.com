@@ -1,0 +1,32 @@
+<?php
+
+use Amp\File;
+use Amp\Promise;
+
+/**
+ * @param string $path
+ */
+function template($path) {
+    print "Loading {$path}..." . PHP_EOL;
+
+    return File\get(__DIR__ . "/templates/" . ltrim($path, "/") . ".html");
+}
+
+/**
+ * @param string $path
+ * @param Promise[] $includes
+ */
+function templateWithIncludes($path, $includes) {
+    return Amp\resolve(() => {
+        print "Loading with includes {$path}..." . PHP_EOL;
+
+        $content = yield template($path);
+
+        foreach ($includes as $key => $value) {
+            print "Including {$key}..." . PHP_EOL;
+            $content = str_replace("[{$key}]", yield $value, $content);
+        }
+
+        return $content;
+    });
+}

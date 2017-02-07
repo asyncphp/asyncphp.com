@@ -1,0 +1,4 @@
+vendor
+composer.lock
+functions.php
+routes.php
